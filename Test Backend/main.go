@@ -71,7 +71,7 @@ func main() {
 	router.HandleFunc("/Add", CreateDataEndpoint).Methods("POST")
 	router.HandleFunc("/backend/question/one", GetTestNumber1).Methods("GET")
 	router.HandleFunc("/backend/question/two", GetTestNumber2).Methods("GET")
-	router.HandleFunc("//backend/question/three", PostTestNumber3).Methods("POST")
+	router.HandleFunc("/backend/question/three", PostTestNumber3).Methods("POST")
 	http.ListenAndServe(":8000", router)
 }
 
@@ -151,16 +151,16 @@ func PostTestNumber3(response http.ResponseWriter, request *http.Request) {
 	var warehouse Input
 	warehouse.CreatedAt = time.Now()
 	_ = json.NewDecoder(request.Body).Decode(&warehouse)
-	wData := warehouse.Items 
+	wData := warehouse.Items
 	loop := []Output{}
-	for _, s:= range wData {
+	for _, s := range wData {
 		loop = append(loop, Output{
 			ID:          warehouse.ID,
-				Category:    warehouse.Category,
-				Title:       s.Title,
-				Description: s.Description,
-				Footer:      s.Footer,
-				CreatedAt:   warehouse.CreatedAt,
+			Category:    warehouse.Category,
+			Title:       s.Title,
+			Description: s.Description,
+			Footer:      s.Footer,
+			CreatedAt:   warehouse.CreatedAt,
 		})
 	}
 	json.NewEncoder(response).Encode(loop)
